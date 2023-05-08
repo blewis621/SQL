@@ -1,0 +1,80 @@
+SELECT title, release_year, language_id, 
+COUNT (*)
+FROM film
+GROUP BY title, release_year, language_id
+HAVING COUNT (*) >1;
+
+
+SELECT first_name, last_name, email, address_id, 
+COUNT (*)
+FROM customer
+GROUP BY first_name, last_name, email, address_id
+HAVING COUNT (*) >1;
+
+
+SELECT release_year, language_id, rating
+FROM film
+GROUP BY release_year, language_id, rating;
+
+
+SELECT DISTINCT activebool, create_date 
+FROM customer;
+
+
+SELECT title, description, language_id, release_year
+FROM film
+WHERE release_year
+IS NULL:
+
+
+SELECT first_name, last_name, email
+FROM customer
+WHERE email
+IS NULL;
+
+
+SELECT
+MIN (rental_duration) AS min_duration,
+MAX (rental_duration) AS max_duration,
+AVG (rental_duration) AS avg_duration,
+MIN (rental_rate) AS min_rent,
+MAX (rental_rate) AS max_rent,
+AVG (rental_rate) AS avg_rent,
+MIN (length) as min_length,
+MAX (length) AS max_length,
+AVG (length) AS avg_length, 
+MIN (replacement_cost) AS min_replacement,
+MAX (replacement_cost) AS max_replacement,
+AVG (replacement_cost) AS avg_replacement,
+MIN (release_year) as min_release_year,
+MAX (release_year) as max_release_year,
+AVG (release_year) as avg_release_year,
+mode () WITHIN GROUP (ORDER BY release_year)
+AS mode_year,
+mode () WITHIN GROUP (ORDER BY language_id) 
+AS mode_lang,
+mode () WITHIN GROUP (ORDER BY rating) 
+AS mode_rating
+FROM film;
+
+
+SELECT
+MIN (customer_id) AS min_cust_id,
+MAX (customer_id) AS max_cust_id,
+MIN (store_id) AS min_store_id,
+MAX (store_id) AS max_store_id,
+mode () WITHIN GROUP (ORDER BY store_id)
+AS mode_store_id,
+MIN (address_id) AS min_add_id,
+MAX (address_id) AS max_add_id,
+MIN (create_date) AS min_create_date,
+MAX (create_date) AS max_create_date,
+mode () WITHIN GROUP (ORDER BY create_date) 
+AS mode_create_date,
+MIN (last_update) AS min_last_update,
+MAX (last_update) AS max_last_update,
+mode () WITHIN GROUP (ORDER BY last_update) 
+AS mode_last_update,
+mode () WITHIN GROUP (ORDER BY activebool) 
+AS mode_activebool
+FROM customer:
