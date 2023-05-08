@@ -1,0 +1,95 @@
+SELECT
+MIN (rental_duration) AS min_duration,
+MAX (rental_duration) AS min_duration,
+AVG (rental_duration) AS min_duration,
+MIN (rental_rate) AS min_rent,
+MAX (rental_rate) AS min_rent,
+AVG (rental_rate) AS min_rent,
+MIN (length) AS min_length,
+MAX (length) AS max_length,
+AVG (length) AS avg_length,
+MIN (replacement_cost) AS min_replacement,
+MAX (replacement_cost) AS min_replacement,
+AVG (replacement_cost) AS min_replacement,
+mode() WITHIN GROUP (ORDER BY release_year)
+AS mode_year,
+mode() WITHIN GROUP (ORDER BY language_id)
+AS mode_lang,
+mode() WITHIN GROUP (ORDER BY rating)
+AS mode_rating
+FROM film;
+
+
+SELECT
+MIN (customer_id) AS min_cust_id,
+MAX (customer_id) AS min_cust_id,
+MIN (store_id) AS min_store_id,
+MAX (store_id) AS min_store_id,
+mode() WITHIN GROUP (ORDER BY store_id)
+AS mode_store_id,
+MIN (address_id) AS min_add_id,
+MAX (address_id) AS min_add_id,
+MIN (create_date) AS min_create_date,
+MAX (create_date) AS min_create_date,
+mode() WITHIN GROUP (ORDER BY create_date)
+AS mode_create_date,
+MIN (last_update) AS min_last_update,
+MAX (last_update) AS min_last_update,
+mode() WITHIN GROUP (ORDER BY last_update)
+AS mode_last_update,
+mode() WITHIN GROUP (ORDER BY activebool)
+AS mode_activebool
+FROM customer;
+
+
+SELECT
+COUNT (A.customer_id) AS number_of_customers, D.country
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id
+GROUP BY country
+ORDER BY number_of_customers DESC
+LIMIT 10
+
+
+SELECT
+COUNT (A.customer_id) AS number_of_customers, D.country, C.city
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id
+WHERE country IN ('India','China','United State','Japan','Mexico','Brazil','Russian Federation')
+GROUP BY country,city
+ORDER BY number_of_customers DESC
+LIMIT 10
+
+
+SELECT 
+A.customer_id, 
+A.first_name AS customer_first_name, 
+A.last_name AS customer_last_name,
+B.address,
+C. city,
+D.country,
+SUM (E.amount) AS total_amount_paid
+FROM customer A
+INNER JOIN payment E ON A.customer_id = E.customer_id
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_id = D.country_id
+WHERE city IN ('Aurora','Acua','Citrus Heights','Iwaki','Ambattur','Shanwei','So Leopoldo','Tianjin')
+GROUP BY A.customer_id,A.first_name,A.last_name,C.city_id,D.country_id,B.address_id
+ORDER BY total_amount_paid DESC
+LIMIT 10
+
+
+SELECT country,
+       COUNT(DISTINCT A.customer_id) AS customer_count,
+       SUM(amount) AS total_payment
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_ID = D.country_ID
+INNER JOIN payment E ON a.customer_id = E.customer_id
+GROUP BY country
