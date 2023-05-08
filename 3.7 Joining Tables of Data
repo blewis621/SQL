@@ -1,5 +1,5 @@
 SELECT
-COUNT(A. customer_id) as number_of_customers, D. country
+COUNT(A. customer_id) AS number_of_customers, D. country
 FROM customer A
 INNER JOIN address B ON A. address_id = B. address_id
 INNER JOIN city C ON B. city_id = C. city_id
@@ -10,13 +10,12 @@ LIMIT 10
 
 
 SELECT 
-COUNT(A. customer_id) as number_of_customers, D. country
+COUNT(A. customer_id) AS number_of_customers, D.country, C.city
 FROM customer A
 INNER JOIN address B ON A. address_id = B. address_id
 INNER JOIN city C ON B. city_id = C. city_id
 INNER JOIN country D ON C. country_id = D. country_id
-INNER JOIN country D ON C. country_id = D. country_id WHERE country IN ('India',
-'China', 'United States','Japan', 'Mexico','Brazil','Russian Federation', 'Philippines',
+WHERE country IN C. country_id = D. country_id WHERE country IN ('India','China', 'United States','Japan', 'Mexico','Brazil','Russian Federation', 'Philippines',
 'Turkey','Indonesia')
 GROUP BY country, city
 ORDER BY number_of_customers DESC
@@ -36,8 +35,7 @@ INNER JOIN address B ON A. address_id = B. address_id
 INNER JOIN city C ON B. city_id = C. city_id
 INNER JOIN country D ON C. country_id = D. country_id
 INNER JOIN payment E ON A. customer_id = E. customer_id
-WHERE city IN ('Aurora','Acua', 'Citrus Heights','Iwaki', 'Ambattur','Shanwei','So Leopoldo',
-'Teboksary', 'Tianjin', 'Cianjur')
+WHERE city IN ('Aurora','Acua', 'Citrus Heights','Iwaki', 'Ambattur','Shanwei','So Leopoldo', 'Teboksary', 'Tianjin', 'Cianjur')
 GROUP BY A.customer_id, A.first_name, A.last_name,C.city, D.country, B.address
 ORDER BY total_amount_paid DESC
 LIMIT 10 
