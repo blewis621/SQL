@@ -1,0 +1,14 @@
+SELECT COUNT(*)
+   FROM actor
+   WHERE first_name = 'Ed'
+
+SELECT * FROM payment LIMIT 10;
+
+SELECT * FROM information_schema.tables
+   WHERE table_schema = 'public'
+   AND table_type = 'BASE TABLE'
+
+   SELECT rental_duration AS "rented for (in days)", COUNT(*) AS "number of films"
+   FROM film
+   GROUP BY 1
+   ORDER BY 2
