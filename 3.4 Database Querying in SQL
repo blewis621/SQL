@@ -1,0 +1,33 @@
+SELECT * FROM film
+
+
+SELECT title, film_id, 
+FROM film
+
+
+EXPLAIN
+SELECT *
+FROM film
+
+EXPLAIN
+SELECT title, film_id
+FROM film
+
+
+SELECT title, release_year, rental_rate
+FROM film
+ORDER BY title ASC,
+release_year DESC,
+renatl_rate DESC
+
+
+SELECT * 
+FROM film
+
+
+SELECT rating,
+AVG (rental_date),
+MIN (rental_duration),
+MAX (rental_duration)
+FROM film
+GROUP BY rating
